@@ -1,0 +1,63 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+    </style>
+
+    <style name="font_regular" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
+    <style name="material_font_regular" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+    `
+    <style name="font_big" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/opensans_semi_bold</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="font_small" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/opensans_light</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="MyShapeAppearanceOverlay" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cardCornerRadius">20dp</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorOnSecondaryDark</item>
+    </style>
+
+</resources>
