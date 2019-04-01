@@ -1,11 +1,13 @@
 package com.example.mvvmkotlin.View
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
@@ -40,33 +42,86 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        pager=findViewById(R.id.pager)
-
+        /*pager=findViewById(R.id.pager)
         tabs=findViewById(R.id.tabs)
-        tabs.addTab(tabs.newTab().setText(getString(R.string.login)),true)
-        tabs.addTab(tabs.newTab().setText(getString(R.string.signup)))
+
+//        Adding fragments to tab
         tabs.setupWithViewPager(pager)
+        tabs.addTab(tabs.newTab().setText(getString(R.string.login)))
+        tabs.addTab(tabs.newTab().setText(getString(R.string.signup)))
+        tabs.tabGravity= TabLayout.GRAVITY_FILL
 
-        setupViewPager(pager,tabs)
 
+//        setting ViewPager Adapter
+//        setupViewPager(pager,tabs)
 
-    }
-
-    private fun setupViewPager(
-        pager: ViewPager,
-        tabs: TabLayout
-    ) {
-        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager,tabs.tabCount)
+        val viewPagerAdapter = ViewPagerAdapter(this@MainActivity,supportFragmentManager,tabs.tabCount)
         pager.adapter=viewPagerAdapter
+        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                pager.currentItem=tab!!.position
+            }
+
+        })*/
+
+        pager=findViewById(R.id.pager)
+        tabs=findViewById(R.id.tabs)
+
+//        Adding fragments to tab
+        tabs.addTab(tabs.newTab().setText(getString(R.string.login)))
+        tabs.addTab(tabs.newTab().setText(getString(R.string.signup)))
+        tabs.tabGravity= TabLayout.GRAVITY_FILL
+//        tabs.setupWithViewPager(pager)
+
+//        setting ViewPager Adapter
+        val viewPagerAdapter = ViewPagerAdapter(this@MainActivity,supportFragmentManager,tabs.tabCount)
+        pager.adapter=viewPagerAdapter
+        pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                pager.currentItem=tab!!.position
+            }
+
+        })
+
     }
 
-    private inner class ViewPagerAdapter(manager: FragmentManager, tabCount: Int) : FragmentPagerAdapter(manager) {
+    private inner class ViewPagerAdapter(var context: Context,var manager: FragmentManager, var tabCount: Int) : FragmentStatePagerAdapter(manager) {
         override fun getItem(position: Int): Fragment {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            return when(position){
+//                1->{
+//                    return LoginFragment()
+//                }
+                1->{
+                    return LoginFragment()
+                }
+                else -> {
+                    return LoginFragment()
+                }
+            }
         }
 
         override fun getCount(): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            return tabCount
         }
 
     }

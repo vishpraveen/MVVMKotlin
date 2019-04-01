@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.*
 
-interface APIService {
+interface RetrofitApis {
 
     @GET("bookingHistory")
     fun bookingHistory(@Query("userId") userId:String,
