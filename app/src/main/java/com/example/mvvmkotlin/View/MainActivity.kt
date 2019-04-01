@@ -108,11 +108,8 @@ class MainActivity : AppCompatActivity() {
     private inner class ViewPagerAdapter(var context: Context,var manager: FragmentManager, var tabCount: Int) : FragmentStatePagerAdapter(manager) {
         override fun getItem(position: Int): Fragment {
             return when(position){
-//                1->{
-//                    return LoginFragment()
-//                }
                 1->{
-                    return LoginFragment()
+                    return RegisterFragment()
                 }
                 else -> {
                     return LoginFragment()
