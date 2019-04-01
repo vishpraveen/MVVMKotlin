@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mvvmkotlin.Model.RegisterUser
@@ -50,8 +51,14 @@ class RegisterFragment: Fragment() {
                     et_last_name.text.toString(),
                     et_email.text.toString(),
                     et_password.text.toString())*/
-
-                registerViewModel?.getUserDetails()?.observe(this,object :Observer<RegisterUser>{
+                registerViewModel?.first_name=et_first_name.text.toString() as MutableLiveData<String>
+                registerViewModel?.last_name=et_last_name.text.toString() as MutableLiveData<String>
+                registerViewModel?.email=et_email.text.toString() as MutableLiveData<String>
+                registerViewModel?.password=et_password.text.toString() as MutableLiveData<String>
+                registerViewModel?.getUserDetails(/*et_first_name.text.toString(),
+                    et_last_name.text.toString(),
+                    et_email.text.toString(),
+                    et_password.text.toString()*/)?.observe(this,object :Observer<RegisterUser>{
                     override fun onChanged(registerUser: RegisterUser?) {
 
                     }

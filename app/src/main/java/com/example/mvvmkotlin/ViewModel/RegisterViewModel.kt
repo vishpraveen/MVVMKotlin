@@ -13,7 +13,12 @@ class RegisterViewModel: ViewModel() {
 
     var registerMutableLiveData= MutableLiveData<RegisterUser>()
 
-    public fun getUserDetails(): MutableLiveData<RegisterUser> {
+    public fun getUserDetails(
+        /*toString: String,
+        toString1: String,
+        toString2: String,
+        toString3: String*/
+    ): MutableLiveData<RegisterUser> {
         if (registerMutableLiveData==null){
             registerMutableLiveData= MutableLiveData()
 
