@@ -15,10 +15,6 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view=inflater.inflate(R.layout.fragment_login,container,false)
         button_login=view.findViewById(R.id.button_login)
-        button_login.setOnClickListener {
-            var intent= Intent(activity,BookingHistory::class.java)
-            startActivity(intent)
-        }
 
         return view
     }
