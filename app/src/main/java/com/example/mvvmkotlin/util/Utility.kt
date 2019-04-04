@@ -1,15 +1,20 @@
 package com.example.mvvmkotlin.util
 
+import android.content.Context
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 object Utility {
 
-    lateinit var firebaseDB:FirebaseFirestore
 
     public fun getFirebaseDb(): FirebaseFirestore {
-        if (firebaseDB==null){
-            firebaseDB= FirebaseFirestore.getInstance()
-        }
+            val firebaseDB:FirebaseFirestore = FirebaseFirestore.getInstance()
         return firebaseDB
+    }
+
+    public fun getfirebaseAuth(): FirebaseAuth{
+        val firebaseAuth:FirebaseAuth= FirebaseAuth.getInstance()
+        return firebaseAuth
     }
 }

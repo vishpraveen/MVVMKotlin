@@ -1,6 +1,7 @@
 package com.example.mvvmkotlin.View
 
 import android.content.Context
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -15,6 +16,7 @@ import com.example.mvvmkotlin.Model.LoginUser
 import com.example.mvvmkotlin.R
 import com.example.mvvmkotlin.ViewModel.LoginViewModel
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.FirebaseApp
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        FirebaseApp.initializeApp(this)
         initUI()
 
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
@@ -122,5 +125,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }
 

@@ -8,4 +8,16 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="register">Register</string>
+    <string name="email_error">Invalid Email</string>
+    <string name="email_empty">Enter Email.</string>
+    <string name="password_empty">Enter Password.</string>
+    <string name="password_length">Password too small.</string>
+    <string name="oops">Oops! Something went wrong.</string>
+    <string name="success">Success.</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="gallery_permission">Please provide permission to access Gallery.</string>
+    <string name="camera_permission">Please provide permission to access Camera.</string>
+    <string name="gallery_permission_title">Storage Permission</string>
+    <string name="camera_permission_title">Camera Permission</string>
 </resources>

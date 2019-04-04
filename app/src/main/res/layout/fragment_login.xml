@@ -12,8 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
             app:boxStrokeColor="@color/colorOnSecondary"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,8 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            app:boxCornerRadiusTopEnd="15dp"
-            app:boxCornerRadiusBottomStart="15dp"
             app:boxStrokeColor="@color/colorOnSecondary"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail"
             android:layout_marginTop="8dp"
             app:hintTextColor="@color/colorOnSecondaryDark"
-    app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
@@ -71,4 +67,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             android:backgroundTint="@color/colorOnSecondaryDark"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:lottie_rawRes="@raw/loading"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

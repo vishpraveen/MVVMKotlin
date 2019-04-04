@@ -59,5 +59,7 @@
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorOnSecondaryDark</item>
     </style>
+    
+    <style name="chooseImageTheme" parent="MaterialAlertDialog.MaterialComponents"/>
 
 </resources>
