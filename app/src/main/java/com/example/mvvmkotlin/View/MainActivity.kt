@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         initUI()
 
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+      /*  loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         loginViewModel?.getUser()?.observe(this,object: Observer<LoginUser>{
             override fun onChanged(loginUser: LoginUser?) {
                 if (TextUtils.isEmpty(Objects.requireNonNull(loginUser)?.emailAddress)){
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        })
+        })*/
     }
 
     private fun initUI() {

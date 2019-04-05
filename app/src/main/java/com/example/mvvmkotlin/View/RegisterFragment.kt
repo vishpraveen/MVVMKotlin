@@ -20,7 +20,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,123 +37,137 @@ import com.google.android.material.textfield.TextInputLayout
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
-class RegisterFragment: Fragment() {
-    private val TAG:String= RegisterFragment::class.java.simpleName
-    private lateinit var ivProfilePic:ImageView
-    private lateinit var ivChoosePic:ImageView
-    private lateinit var textInputLayoutFirstName:TextInputLayout
-    private lateinit var textInputLayoutLastName:TextInputLayout
-    private lateinit var textInputLayoutEmail:TextInputLayout
-    private lateinit var textInputLayoutPassword:TextInputLayout
-    private lateinit var et_first_name:TextInputEditText
-    private lateinit var et_last_name:TextInputEditText
-    private lateinit var et_email:TextInputEditText
-    private lateinit var et_password:TextInputEditText
-    private lateinit var btnRegister:Button
+class RegisterFragment : Fragment() {
+    private val TAG: String = RegisterFragment::class.java.simpleName
+    private lateinit var registerMainConstraint: ConstraintLayout
+    private lateinit var ivProfilePic: ImageView
+    private lateinit var ivChoosePic: ImageView
+    private lateinit var textInputLayoutFirstName: TextInputLayout
+    private lateinit var textInputLayoutLastName: TextInputLayout
+    private lateinit var textInputLayoutEmail: TextInputLayout
+    private lateinit var textInputLayoutPassword: TextInputLayout
+    private lateinit var et_first_name: TextInputEditText
+    private lateinit var et_last_name: TextInputEditText
+    private lateinit var et_email: TextInputEditText
+    private lateinit var et_password: TextInputEditText
+    private lateinit var btnRegister: Button
     private lateinit var animation_view: LottieAnimationView
-    private var encodedImageString: String=""
+    private var encodedImageString: String = ""
     private val REQUEST_IMAGE_GET = 1
     private val REQUEST_IMAGE_CAPTURE = 2
 
-//    private var bookingHistoryViewModel: BookingHistoryViewModel?=null
-    private var registerViewModel : RegisterViewModel?=null
+    //    private var bookingHistoryViewModel: BookingHistoryViewModel?=null
+    private var registerViewModel: RegisterViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view=inflater.inflate(R.layout.fragment_register,container,false)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
         initUI(view)
         setClickListener()
-        registerViewModel=ViewModelProviders.of(this).get(RegisterViewModel::class.java)
+        registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
         return view
     }
 
     private fun setClickListener() {
 
         ivChoosePic.setOnClickListener {
-            var optionDialog:AlertDialog
-            val alertDialog: MaterialAlertDialogBuilder =MaterialAlertDialogBuilder(context,R.style.chooseImageTheme)
-            val view=LayoutInflater.from(context).inflate(R.layout.dialog_custom,null)
-            val ivGallery= view.findViewById<ImageView>(R.id.ivGallery)
-            val ivCamera= view.findViewById<ImageView>(R.id.ivCamera)
-            val llGallery= view.findViewById<LinearLayout>(R.id.llGallery)
-            val llCamera= view.findViewById<LinearLayout>(R.id.llCamera)
+            var optionDialog: AlertDialog
+            val alertDialog: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.chooseImageTheme)
+            val view = LayoutInflater.from(context).inflate(R.layout.dialog_custom, null)
+            val ivGallery = view.findViewById<ImageView>(R.id.ivGallery)
+            val ivCamera = view.findViewById<ImageView>(R.id.ivCamera)
+            val llGallery = view.findViewById<LinearLayout>(R.id.llGallery)
+            val llCamera = view.findViewById<LinearLayout>(R.id.llCamera)
             alertDialog.setView(view)
 //            alertDialog.show()
-            optionDialog=alertDialog.create()
+            optionDialog = alertDialog.create()
             optionDialog.show()
 
             llGallery.setOnClickListener {
                 optionDialog.dismiss()
-                if (checkSelfPermission(context!!,Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
-                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE),REQUEST_IMAGE_GET)
-                }
-                else {
+                if (checkSelfPermission(
+                        context!!,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        ), REQUEST_IMAGE_GET
+                    )
+                } else {
                     selectImage()
                 }
             }
             llCamera.setOnClickListener {
                 optionDialog.dismiss()
-                if (checkSelfPermission(context!!,Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
-                    requestPermissions(arrayOf(Manifest.permission.CAMERA),REQUEST_IMAGE_CAPTURE)
-                }
-                else {
+                if (checkSelfPermission(context!!, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_IMAGE_CAPTURE)
+                } else {
                     captureImage()
                 }
             }
         }
 
-
-
         btnRegister.setOnClickListener {
-            if (isValidUser()) {
-               registerViewModel?.setUserDetails(et_first_name.text.toString(),
-                   et_last_name.text.toString(),
-                   et_email.text.toString(),
-                   et_password.text.toString(),
-                   encodedImageString)?.observe(this,object: Observer<CommonModel>{
-                   override fun onChanged(commonModel: CommonModel?) {
-                       Log.e(TAG,"onChanged: "+commonModel.toString())
-                       msg(commonModel?.message)
-                   }
-
-               })
-
-                registerViewModel?.showhideProgressDialog()?.observe(this,
-                    Observer<Boolean> { status ->
-                        Log.e(TAG,"status: "+status)
-                        if (status){
-                            showhideProgressbar(status)
-                        } else{
-                            showhideProgressbar(status)
-                        }
+            if (Utility.isConnectedToInternet(context)) {
+                if (isValidUser()) {
+                    registerViewModel?.setUserDetails(
+                        et_first_name.text.toString(),
+                        et_last_name.text.toString(),
+                        et_email.text.toString(),
+                        et_password.text.toString(),
+                        encodedImageString
+                    )?.observe(this, Observer<CommonModel> { commonModel ->
+                        Log.e(TAG, "onChanged: " + commonModel.toString())
+                        msg(commonModel?.message)
                     })
-            Log.e(TAG,"onRegisterClick: ")
+
+                    registerViewModel?.showhideProgressDialog()?.observe(this,
+                        Observer<Boolean> { status ->
+                            Log.e(TAG, "status: " + status)
+                            if (status) {
+                                showhideProgressbar(status)
+                            } else {
+                                showhideProgressbar(status)
+                            }
+                        })
+                    Log.e(TAG, "onRegisterClick: ")
+                }
+            } else {
+                Utility.showShackBarWithoutAction(registerMainConstraint, getString(R.string.no_internet))
             }
+
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
-            REQUEST_IMAGE_GET->{
-                if (grantResults.size>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        when (requestCode) {
+            REQUEST_IMAGE_GET -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     selectImage()
-                }
-                else{
-                    showPermissionDialog(getString(R.string.gallery_permission_title),getString(R.string.gallery_permission))
+                } else {
+                    showPermissionDialog(
+                        getString(R.string.gallery_permission_title),
+                        getString(R.string.gallery_permission)
+                    )
                 }
             }
-            REQUEST_IMAGE_CAPTURE->{
-                if (grantResults.size>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            REQUEST_IMAGE_CAPTURE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     captureImage()
-                }
-                else{
-                    showPermissionDialog(getString(R.string.camera_permission_title),getString(R.string.camera_permission))
+                } else {
+                    showPermissionDialog(
+                        getString(R.string.camera_permission_title),
+                        getString(R.string.camera_permission)
+                    )
                 }
             }
         }
     }
 
-    private fun showPermissionDialog(titleMessage:String, requestMessage: String) {
-        var permissionDialog= MaterialAlertDialogBuilder(context)
+    private fun showPermissionDialog(titleMessage: String, requestMessage: String) {
+        var permissionDialog = MaterialAlertDialogBuilder(context)
         permissionDialog.setTitle(titleMessage)
         permissionDialog.setMessage(requestMessage)
         permissionDialog.setPositiveButton("Ok", null)
@@ -182,10 +196,10 @@ class RegisterFragment: Fragment() {
 //            val thumbnail: Bitmap = data!!.getParcelableExtra("data")
             val fullPhotoUri: Uri = data!!.data
             // Do work with photo saved at fullPhotoUri
-            var imageStream:InputStream= activity!!.contentResolver.openInputStream(fullPhotoUri)
-            var image:Bitmap= BitmapFactory.decodeStream(imageStream)
-            encodedImageString=encodeImageToString(image)
-            Log.e(TAG,"EncodedImage: "+encodedImageString)
+            var imageStream: InputStream = activity!!.contentResolver.openInputStream(fullPhotoUri)
+            var image: Bitmap = BitmapFactory.decodeStream(imageStream)
+            encodedImageString = encodeImageToString(image)
+            Log.e(TAG, "EncodedImage: " + encodedImageString)
             Glide.with(context!!)
                 .asBitmap()
                 .load(fullPhotoUri)
@@ -194,8 +208,8 @@ class RegisterFragment: Fragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data!!.extras.get("data") as Bitmap
-            encodedImageString=encodeImageToString(imageBitmap)
-            Log.e(TAG,"EncodedImage: "+encodedImageString)
+            encodedImageString = encodeImageToString(imageBitmap)
+            Log.e(TAG, "EncodedImage: " + encodedImageString)
             Glide.with(context!!)
                 .asBitmap()
                 .load(imageBitmap)
@@ -204,10 +218,10 @@ class RegisterFragment: Fragment() {
     }
 
     private fun encodeImageToString(image: Bitmap): String {
-        var baos= ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.PNG,100,baos)
+        var baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
         var b = baos.toByteArray()
-        var encImage=Base64.encodeToString(b,Base64.DEFAULT)
+        var encImage = Base64.encodeToString(b, Base64.DEFAULT)
         return encImage
     }
 
@@ -216,54 +230,51 @@ class RegisterFragment: Fragment() {
     }
 
     private fun isValidUser(): Boolean {
-            if (et_first_name.text.toString().isEmpty()){
-                return false
-            }
-            else if (et_last_name.text.toString().isEmpty()){
-                return false
-            }
-            else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches()){
-                return false
-            }
-            else if (et_password.text.toString().length < 5){
-                return false
-            }
-            return true
+        if (et_first_name.text.toString().isEmpty()) {
+            return false
+        } else if (et_last_name.text.toString().isEmpty()) {
+            return false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches()) {
+            return false
+        } else if (et_password.text.toString().length < 5) {
+            return false
+        }
+        return true
     }
 
     private fun initUI(view: View?) {
-        ivProfilePic=view!!.findViewById(R.id.ivProfilePic)
+        registerMainConstraint = view!!.findViewById(R.id.registerMainConstraint)
+        ivProfilePic = view!!.findViewById(R.id.ivProfilePic)
         Glide.with(this)
             .load(R.drawable.ic_profile)
             .into(ivProfilePic)
-        ivChoosePic=view!!.findViewById(R.id.ivChoosePic)
-        textInputLayoutFirstName=view!!.findViewById(R.id.textInputLayoutFirstName)
-        textInputLayoutLastName=view!!.findViewById(R.id.textInputLayoutLastName)
-        textInputLayoutEmail=view!!.findViewById(R.id.textInputLayoutEmail)
-        textInputLayoutPassword=view!!.findViewById(R.id.textInputLayoutPassword)
-        et_first_name=view!!.findViewById(R.id.et_first_name)
-        et_last_name=view!!.findViewById(R.id.et_last_name)
-        et_email=view!!.findViewById(R.id.et_email)
-        et_password=view!!.findViewById(R.id.et_password)
-        btnRegister=view!!.findViewById(R.id.btnRegister)
-        animation_view=view.findViewById(R.id.animation_view)
+        ivChoosePic = view!!.findViewById(R.id.ivChoosePic)
+        textInputLayoutFirstName = view!!.findViewById(R.id.textInputLayoutFirstName)
+        textInputLayoutLastName = view!!.findViewById(R.id.textInputLayoutLastName)
+        textInputLayoutEmail = view!!.findViewById(R.id.textInputLayoutEmail)
+        textInputLayoutPassword = view!!.findViewById(R.id.textInputLayoutPassword)
+        et_first_name = view!!.findViewById(R.id.et_first_name)
+        et_last_name = view!!.findViewById(R.id.et_last_name)
+        et_email = view!!.findViewById(R.id.et_email)
+        et_password = view!!.findViewById(R.id.et_password)
+        btnRegister = view!!.findViewById(R.id.btnRegister)
+        animation_view = view.findViewById(R.id.animation_view)
     }
 
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = Utility.getfirebaseAuth().currentUser
-        if (currentUser!=null){
+        if (currentUser != null) {
             Utility.getfirebaseAuth().signOut()
         }
     }
 
     private fun showhideProgressbar(status: Boolean) {
-        if (status){
-            animation_view.visibility=View.VISIBLE
-        }
-        else{
-            animation_view.visibility=View.GONE
+        if (status) {
+            animation_view.visibility = View.VISIBLE
+        } else {
+            animation_view.visibility = View.GONE
         }
     }
 }
