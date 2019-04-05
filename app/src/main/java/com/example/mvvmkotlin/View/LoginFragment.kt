@@ -1,5 +1,6 @@
 package com.example.mvvmkotlin.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -24,6 +25,7 @@ class LoginFragment : Fragment() {
     private var TAG: String = this@LoginFragment::class.java.simpleName
     private lateinit var loginMainConstraint: ConstraintLayout
     private lateinit var button_login: Button
+    private lateinit var forgot_password: Button
     private lateinit var textInputLayoutEmail: TextInputLayout
     private lateinit var textInputLayoutPassword: TextInputLayout
     private lateinit var et_email: TextInputEditText
@@ -40,6 +42,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun setClickListener() {
+
+        forgot_password.setOnClickListener {
+            val intent=Intent(activity,ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         button_login.setOnClickListener {
             if (Utility.isConnectedToInternet(context)) {
                 if (Utility.getfirebaseAuth().currentUser != null) {
@@ -113,6 +121,7 @@ class LoginFragment : Fragment() {
         et_email = view!!.findViewById(R.id.et_email)
         et_password = view!!.findViewById(R.id.et_password)
         button_login = view!!.findViewById(R.id.button_login)
+        forgot_password = view!!.findViewById(R.id.forgot_password)
         animation_view = view.findViewById(R.id.animation_view)
     }
 
