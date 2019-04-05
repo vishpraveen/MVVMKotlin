@@ -230,13 +230,27 @@ class RegisterFragment : Fragment() {
     }
 
     private fun isValidUser(): Boolean {
+        textInputLayoutFirstName.error=null
+        textInputLayoutLastName.error=null
+        textInputLayoutEmail.error=null
+        textInputLayoutPassword.error=null
         if (et_first_name.text.toString().isEmpty()) {
+            textInputLayoutFirstName.error=getString(R.string.first_name_error)
             return false
         } else if (et_last_name.text.toString().isEmpty()) {
+            textInputLayoutLastName.error=getString(R.string.last_name_error)
             return false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches()) {
+        } else if (et_email.text.toString().isEmpty()) {
+            textInputLayoutEmail.error=getString(R.string.email_empty)
             return false
-        } else if (et_password.text.toString().length < 5) {
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(et_email.text.toString()).matches()) {
+            textInputLayoutEmail.error=getString(R.string.email_error)
+            return false
+        } else if (et_password.text.toString().isEmpty()) {
+            textInputLayoutPassword.error=getString(R.string.password_empty)
+            return false
+        }else if (et_password.text.toString().length < 5) {
+            textInputLayoutPassword.error=getString(R.string.password_length)
             return false
         }
         return true

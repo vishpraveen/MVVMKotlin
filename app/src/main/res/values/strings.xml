@@ -22,4 +22,7 @@
     <string name="camera_permission_title">Camera Permission</string>
     <string name="ok">OK</string>
     <string name="no_internet">Sorry! It seems that your not connected to internet.</string>
+    <string name="name_error">Enter your name.</string>
+    <string name="first_name_error">Enter your first name.</string>
+    <string name="last_name_error">Enter your last name.</string>
 </resources>

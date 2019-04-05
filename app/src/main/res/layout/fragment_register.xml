@@ -5,7 +5,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-android:id="@+id/registerMainConstraint">
+        android:id="@+id/registerMainConstraint">
 
     <RelativeLayout
             android:id="@+id/rlProfilePicHolder"
@@ -14,31 +14,31 @@ android:id="@+id/registerMainConstraint">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="32dp">
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_32sdp">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivProfilePic"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_centerInParent="true"/>
 
         <ImageView
                 android:id="@+id/ivChoosePic"
-                android:layout_width="25dp"
-                   android:layout_height="20dp"
-                   android:src="@drawable/ic_camera"
-                   android:layout_alignBottom="@id/ivProfilePic"
-                   android:layout_alignEnd="@id/ivProfilePic"
-                   android:tint="@color/colorOnSecondaryDark"
-                   android:background="?attr/selectableItemBackgroundBorderless"
-                   android:clickable="true"
-                   android:focusable="true"/>
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_camera"
+                android:layout_alignBottom="@id/ivProfilePic"
+                android:layout_alignEnd="@id/ivProfilePic"
+                android:tint="@color/colorOnSecondaryDark"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"/>
     </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -50,11 +50,11 @@ android:id="@+id/registerMainConstraint">
             app:boxStrokeColor="@color/colorOnSecondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             app:hintTextColor="@color/colorOnSecondaryDark"
             app:layout_constraintTop_toBottomOf="@+id/rlProfilePicHolder"
-            android:layout_marginTop="32dp">
+            android:layout_marginTop="@dimen/_24sdp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_first_name"
@@ -71,12 +71,12 @@ android:id="@+id/registerMainConstraint">
             android:layout_height="wrap_content"
             android:hint="@string/last_name"
             app:boxStrokeColor="@color/colorOnSecondary"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:id="@+id/textInputLayoutLastName"
             app:hintTextColor="@color/colorOnSecondaryDark"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFirstName"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp">
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="@dimen/_8sdp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_last_name"
@@ -93,12 +93,12 @@ android:id="@+id/registerMainConstraint">
             android:layout_height="wrap_content"
             android:hint="@string/email"
             app:boxStrokeColor="@color/colorOnSecondary"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:id="@+id/textInputLayoutEmail"
             app:hintTextColor="@color/colorOnSecondaryDark"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp">
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="@dimen/_8sdp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
@@ -116,10 +116,10 @@ android:id="@+id/registerMainConstraint">
             android:layout_height="wrap_content"
             android:hint="@string/password"
             app:boxStrokeColor="@color/colorOnSecondary"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:hintTextColor="@color/colorOnSecondaryDark"
             app:passwordToggleEnabled="true">
 
@@ -138,16 +138,16 @@ android:id="@+id/registerMainConstraint">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
             android:backgroundTint="@color/colorOnSecondaryDark"/>
 
     <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
             app:lottie_rawRes="@raw/loading"
             app:lottie_loop="true"
             app:lottie_autoPlay="true"

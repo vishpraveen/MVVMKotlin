@@ -18,7 +18,7 @@
     <color name="colorOnBackground">#000000</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#000000</color>
-    <color name="colorError">#7b0000</color>
+    <color name="colorError">#d50000</color>
     <color name="colorOnError">#FFFFFF</color>
 
     <color name="transparent">#00000000</color>
