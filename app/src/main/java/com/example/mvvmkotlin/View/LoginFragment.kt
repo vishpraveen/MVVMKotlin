@@ -2,6 +2,8 @@ package com.example.mvvmkotlin.View
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import com.example.mvvmkotlin.ViewModel.LoginViewModel
 import com.example.mvvmkotlin.util.Utility
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class LoginFragment : Fragment() {
     private var TAG: String = this@LoginFragment::class.java.simpleName
@@ -58,7 +61,13 @@ class LoginFragment : Fragment() {
                         ?.observe(this, object : Observer<CommonModel> {
                             override fun onChanged(commonModel: CommonModel?) {
                                 Log.e(TAG, "onChanged: " + commonModel.toString())
-                                msg(commonModel!!.message)
+                                if(commonModel!!.status.equals("1")){
+                                    msg(commonModel!!.message)
+                                    redirectToDrawerActivity()
+                                }
+                                else{
+                                    msg(commonModel!!.message)
+                                }
                             }
                         })
 
@@ -77,6 +86,11 @@ class LoginFragment : Fragment() {
                 Utility.showShackBarWithoutAction(loginMainConstraint,getString(R.string.no_internet))
             }
         }
+    }
+
+    private fun redirectToDrawerActivity() {
+        var intent=Intent(activity,DrawerActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showhideProgressbar(status: Boolean) {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/homeFragment">
+
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home"
+        android:textSize="35dp"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"/>-->
+
+    <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/myLocation"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_50sdp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:clickable="true"
+            android:focusable="true">
+
+        <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_my_location"
+                android:scaleType="center"
+                android:padding="@dimen/_1sdp"
+                android:layout_gravity="center"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
