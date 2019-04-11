@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.FrameLayout
@@ -24,7 +25,7 @@ import com.google.android.material.navigation.NavigationView
 class DrawerActivity : AppCompatActivity() {
 
     private var context: Context? = null
-
+    private var doubleBackToExitPressedOnce= false
     //    setting Navigation Components
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
@@ -131,4 +132,13 @@ class DrawerActivity : AppCompatActivity() {
         transition.commit()
     }
 
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+        this.doubleBackToExitPressedOnce=true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+    }
 }

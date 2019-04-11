@@ -91,6 +91,7 @@ class LoginFragment : Fragment() {
     private fun redirectToDrawerActivity() {
         var intent=Intent(activity,DrawerActivity::class.java)
         startActivity(intent)
+        activity!!.finish()
     }
 
     private fun showhideProgressbar(status: Boolean) {
