@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.mvvmkotlin.Model.CommonModel
 import com.example.mvvmkotlin.R
 import com.example.mvvmkotlin.ViewModel.LoginViewModel
+import com.example.mvvmkotlin.util.SharedPreferenceKeys
 import com.example.mvvmkotlin.util.Utility
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -62,18 +63,19 @@ class LoginFragment : Fragment() {
                             override fun onChanged(commonModel: CommonModel?) {
                                 Log.e(TAG, "onChanged: " + commonModel.toString())
                                 if(commonModel!!.status.equals("1")){
-                                    msg(commonModel!!.message)
+                                    msg(getString(R.string.welcome))
+                                    Utility.setPreference(context,SharedPreferenceKeys().email,et_email.text.toString())
                                     redirectToDrawerActivity()
                                 }
                                 else{
-                                    msg(commonModel!!.message)
+                                    msg(commonModel.message)
                                 }
                             }
                         })
 
                     loginViewModel?.showhideProgressDialog()?.observe(this, object : Observer<Boolean> {
                         override fun onChanged(status: Boolean?) {
-                            Log.e(TAG, "status: " + status)
+                            Log.e(TAG, "status: $status")
                             if (status!!) {
                                 showhideProgressbar(status)
                             } else {
@@ -89,7 +91,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun redirectToDrawerActivity() {
-        var intent=Intent(activity,DrawerActivity::class.java)
+        val intent=Intent(activity,DrawerActivity::class.java)
         startActivity(intent)
         activity!!.finish()
     }
@@ -131,12 +133,12 @@ class LoginFragment : Fragment() {
 
     private fun initUI(view: View?) {
         loginMainConstraint = view!!.findViewById(R.id.loginMainConstraint)
-        textInputLayoutEmail = view!!.findViewById(R.id.textInputLayoutEmail)
-        textInputLayoutPassword = view!!.findViewById(R.id.textInputLayoutPassword)
-        et_email = view!!.findViewById(R.id.et_email)
-        et_password = view!!.findViewById(R.id.et_password)
-        button_login = view!!.findViewById(R.id.button_login)
-        forgot_password = view!!.findViewById(R.id.forgot_password)
+        textInputLayoutEmail = view.findViewById(R.id.textInputLayoutEmail)
+        textInputLayoutPassword = view.findViewById(R.id.textInputLayoutPassword)
+        et_email = view.findViewById(R.id.et_email)
+        et_password = view.findViewById(R.id.et_password)
+        button_login = view.findViewById(R.id.button_login)
+        forgot_password = view.findViewById(R.id.forgot_password)
         animation_view = view.findViewById(R.id.animation_view)
     }
 

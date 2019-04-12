@@ -28,10 +28,8 @@ class RegisterViewModel: ViewModel() {
         password: String,
         profileImage: String
     ): MutableLiveData<CommonModel> {
-        if (registerMutableLiveData==null){
             registerMutableLiveData= MutableLiveData()
             registerUser(firstName,lastName,email,password,profileImage)
-        }
         return registerMutableLiveData as MutableLiveData<CommonModel>
     }
 

@@ -35,4 +35,7 @@
     <string name="permission_not_granted">Please grant permission.</string>
     <string name="task_is_null">Task is null.</string>
     <string name="enable_location">Please enable location services</string>
+    <string name="Firebase_db_user_path">User</string>
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome</string>
 </resources>

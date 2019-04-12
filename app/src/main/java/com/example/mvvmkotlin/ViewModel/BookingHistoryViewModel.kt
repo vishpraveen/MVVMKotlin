@@ -22,10 +22,8 @@ class BookingHistoryViewModel : ViewModel() {
     var showHideLoader: MutableLiveData<Boolean>?= MutableLiveData()
 
     public fun getbookinghistorymodel() : LiveData<BookingHistoryModel>{
-        if (bookinghistorymodel==null) {
             bookinghistorymodel = MutableLiveData<BookingHistoryModel>()
             fetchBookingHistoryData("2", "nfLo77EODdYk3CI2", "10", "1")
-        }
         return bookinghistorymodel as MutableLiveData<BookingHistoryModel>
     }
     public fun showhideProgressDialog(): LiveData<Boolean>{

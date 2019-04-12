@@ -4,26 +4,48 @@ import android.os.Bundle
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Handler
+import android.util.Base64
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.mvvmkotlin.Model.UserDetails
 import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.ViewModel.DrawerActivityViewModel
+import com.example.mvvmkotlin.util.SharedPreferenceKeys
+import com.example.mvvmkotlin.util.Utility
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 
 class DrawerActivity : AppCompatActivity() {
 
+    private val TAG= DrawerActivity::class.java.simpleName
     private var context: Context? = null
     private var doubleBackToExitPressedOnce= false
     //    setting Navigation Components
@@ -33,18 +55,64 @@ class DrawerActivity : AppCompatActivity() {
     private lateinit var navigationview: NavigationView
     private lateinit var fab: FloatingActionButton
     private lateinit var mainFrame: FrameLayout
+    private lateinit var navigationHeader: View
+    private lateinit var iv_image: ImageView
+    private lateinit var tv_name: TextView
+    private lateinit var tv_email: TextView
     private var homeFragment : HomeFragment = HomeFragment()
     private var profileFragment: ProfileFragment = ProfileFragment()
     private var fragmentManager: FragmentManager=supportFragmentManager
+    private var drawerActViewModel: DrawerActivityViewModel?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawer)
         context = this
-        fragmentManager
         initUI()
         setonClickListener()
         setHomeFragment()
+        drawerActViewModel= ViewModelProviders.of(this).get(DrawerActivityViewModel::class.java)
+        fetchUserDetails()
+    }
+
+    private fun fetchUserDetails() {
+        if(Utility.isConnectedToInternet(context)){
+            drawerActViewModel!!.getUserDetails(context!!).observe(this,Observer<UserDetails>{userDetails->
+                if (userDetails.status.equals("1")){
+                    tv_name.text=userDetails.first_name
+                    tv_email.text=userDetails.email
+                    if(!userDetails.profilePic.isEmpty()) {
+                        Glide.with(context!!)
+                            .asBitmap()
+                            .load(decodeStringToBitmap(userDetails.profilePic))
+                            .apply(
+                                RequestOptions()
+                                    .placeholder(R.drawable.ic_place_holder)
+                            )
+                            .into(iv_image)
+                    }
+                    Utility.setPreference(context,SharedPreferenceKeys().firstName,userDetails.first_name)
+                    Utility.setPreference(context,SharedPreferenceKeys().lastName,userDetails.last_name)
+                    Utility.setPreference(context,SharedPreferenceKeys().profilePic,userDetails.profilePic)
+                }
+                else{
+                    Utility.showShackBarWithoutAction(drawerLayout,userDetails.message)
+                }
+            })
+        }
+        else{
+            showErrorMessage(getString(R.string.no_internet))
+        }
+    }
+
+    private fun decodeStringToBitmap(stringImage: Any?) : Bitmap{
+        var decodeString= Base64.decode(stringImage.toString(),Base64.DEFAULT)
+        var image: Bitmap= BitmapFactory.decodeByteArray(decodeString,0,decodeString.size)
+        return image
+    }
+
+    private fun showErrorMessage(message: String) {
+        Utility.showShackBarWithoutAction(drawerLayout,message)
     }
 
 
@@ -83,6 +151,16 @@ class DrawerActivity : AppCompatActivity() {
 //                    toolbar.title=getString(R.string.profile)
                     msg(getString(R.string.profile_act))*/
                 }
+                R.id.logout ->{
+                    Utility.getfirebaseAuth().signOut()
+                    Utility.removePreference(context,SharedPreferenceKeys().email)
+                    Utility.removePreference(context,SharedPreferenceKeys().firstName)
+                    Utility.removePreference(context,SharedPreferenceKeys().lastName)
+                    Utility.removePreference(context,SharedPreferenceKeys().profilePic)
+                    var intent=Intent(this@DrawerActivity,MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
             true
         }
@@ -108,6 +186,13 @@ class DrawerActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
+        navigationHeader= navigationview.getHeaderView(0)
+        iv_image=navigationHeader.findViewById(R.id.iv_image)
+        tv_name=navigationHeader.findViewById(R.id.tv_name)
+        tv_email=navigationHeader.findViewById(R.id.tv_email)
+
+//        tv_name.text=currentUser
+//        tv_email.text=currentUser!!.email
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

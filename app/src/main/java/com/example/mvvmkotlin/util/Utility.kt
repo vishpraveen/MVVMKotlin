@@ -1,6 +1,8 @@
 package com.example.mvvmkotlin.util
 
+import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.provider.Settings.Global.getString
@@ -29,7 +31,7 @@ object Utility {
     public fun isConnectedToInternet(context: Context?):Boolean{
         val connectivityManage=context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo?=connectivityManage.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        var isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
         Log.e("isConnectedToInternet","Status: "+ isConnected)
         return isConnected
     }
@@ -53,5 +55,36 @@ object Utility {
             }).show()
     }
 
+    public fun setPreference(context: Context?,key: String, value: String){
+        var editor: SharedPreferences.Editor= context!!.getSharedPreferences(context.getString(R.string.app_name),Context.MODE_PRIVATE).edit()
+        editor.putString(key,value)
+        editor.apply()
+        editor.commit()
+    }
+
+    public fun setBooleanPreference(context: Context?,key: String, value: Boolean){
+        var editor: SharedPreferences.Editor= context!!.getSharedPreferences(context.getString(R.string.app_name),Context.MODE_PRIVATE).edit()
+        editor.putBoolean(key,value)
+        editor.apply()
+        editor.commit()
+    }
+
+    public fun getPreference(context: Context?, key: String): String? {
+        var sharedPref: SharedPreferences=context!!.getSharedPreferences(context.getString(R.string.app_name),Context.MODE_PRIVATE)
+        return sharedPref.getString(key, "")
+    }
+
+    public fun getBoolenPreference(context: Context?, key: String): Boolean? {
+        var sharedPref: SharedPreferences=context!!.getSharedPreferences(context.getString(R.string.app_name),Context.MODE_PRIVATE)
+        return sharedPref.getBoolean(key, false)
+    }
+
+    public fun removePreference(context: Context?, key: String){
+        var sharedPref: SharedPreferences=context!!.getSharedPreferences(context.getString(R.string.app_name),Context.MODE_PRIVATE)
+        var editor: SharedPreferences.Editor= sharedPref.edit()
+        editor.remove(key)
+        editor.apply()
+        editor.commit()
+    }
 
 }

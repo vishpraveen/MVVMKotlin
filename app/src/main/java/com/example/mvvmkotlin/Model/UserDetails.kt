@@ -2,10 +2,12 @@ package com.example.mvvmkotlin.Model
 
 import android.util.Patterns
 
-class RegisterUser(var first_name: String,
-                   var last_name: String,
-                   var email: String,
-                   var password: String) {
+data class UserDetails(var status: String,
+                       var message: String,
+                       var first_name: String,
+                  var last_name: String,
+                  var email: String,
+                  var profilePic: String) {
 
     /*public fun isValidaDetails():Boolean{
         if (first_name.isEmpty()){

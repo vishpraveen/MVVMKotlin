@@ -14,10 +14,8 @@ class LoginViewModel : ViewModel() {
     var commonModel: CommonModel?=null
 
     public fun getUser(email: String , password: String): MutableLiveData<CommonModel>{
-        if (loginMutableLiveData == null){
             loginMutableLiveData = MutableLiveData()
             loginClick(email,password)
-        }
         return loginMutableLiveData as MutableLiveData<CommonModel>
     }
 
