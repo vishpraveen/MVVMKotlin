@@ -1,6 +1,4 @@
-package com.example.mvvmkotlin.Model
-
-import android.util.Patterns
+package com.example.mvvmkotlin.models
 
 data class UserDetails(var status: String,
                        var message: String,

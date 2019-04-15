@@ -21,13 +21,13 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
         <activity
-                android:name=".View.DrawerActivity"
+                android:name=".views.DrawerActivity"
                 android:label="@string/title_activity_drawer">
         </activity>
-        <activity android:name=".View.ForgotPasswordActivity">
+        <activity android:name=".views.ForgotPasswordActivity">
         </activity>
         <activity
-                android:name=".View.BookingHistory"
+                android:name=".views.BookingHistory"
                 android:label="@string/title_activity_booking_history"
                 android:theme="@style/AppTheme.NoActionBar">
 
@@ -39,7 +39,7 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>

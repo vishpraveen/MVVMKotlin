@@ -1,9 +1,7 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -16,14 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.airbnb.lottie.LottieAnimationView
-import com.example.mvvmkotlin.Model.CommonModel
+import com.example.mvvmkotlin.models.CommonModel
 import com.example.mvvmkotlin.R
-import com.example.mvvmkotlin.ViewModel.LoginViewModel
+import com.example.mvvmkotlin.viewmodels.LoginViewModel
 import com.example.mvvmkotlin.util.SharedPreferenceKeys
 import com.example.mvvmkotlin.util.Utility
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class LoginFragment : Fragment() {
     private var TAG: String = this@LoginFragment::class.java.simpleName

@@ -1,10 +1,10 @@
-package com.example.mvvmkotlin.ViewModel
+package com.example.mvvmkotlin.viewmodels
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvmkotlin.Model.UserDetails
+import com.example.mvvmkotlin.models.UserDetails
 import com.example.mvvmkotlin.util.SharedPreferenceKeys
 import com.example.mvvmkotlin.util.Utility
 import com.google.firebase.firestore.CollectionReference

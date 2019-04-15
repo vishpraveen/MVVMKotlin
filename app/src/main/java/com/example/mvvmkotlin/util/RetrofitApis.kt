@@ -1,14 +1,12 @@
 package com.example.mvvmkotlin.util
 
-import com.example.mvvmkotlin.Model.BookingHistoryModel
-import com.example.mvvmkotlin.Model.CommonModel
+import com.example.mvvmkotlin.models.BookingHistoryModel
+import com.example.mvvmkotlin.models.CommonModel
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.util.*
 
 interface RetrofitApis {
 

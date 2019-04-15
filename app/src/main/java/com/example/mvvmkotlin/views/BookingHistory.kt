@@ -1,6 +1,5 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -11,10 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mvvmkotlin.Model.BookingHistoryData
-import com.example.mvvmkotlin.Model.BookingHistoryModel
+import com.example.mvvmkotlin.models.BookingHistoryData
+import com.example.mvvmkotlin.models.BookingHistoryModel
 import com.example.mvvmkotlin.R
-import com.example.mvvmkotlin.ViewModel.BookingHistoryViewModel
+import com.example.mvvmkotlin.viewmodels.BookingHistoryViewModel
 
 import kotlinx.android.synthetic.main.activity_booking_history.*
 

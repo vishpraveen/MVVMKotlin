@@ -1,10 +1,10 @@
-package com.example.mvvmkotlin.ViewModel
+package com.example.mvvmkotlin.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvmkotlin.Model.CommonModel
+import com.example.mvvmkotlin.models.CommonModel
 import com.example.mvvmkotlin.util.Utility
 import com.google.firebase.auth.FirebaseAuth
 

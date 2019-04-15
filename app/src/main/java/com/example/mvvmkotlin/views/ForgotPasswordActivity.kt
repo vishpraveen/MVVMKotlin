@@ -1,4 +1,4 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

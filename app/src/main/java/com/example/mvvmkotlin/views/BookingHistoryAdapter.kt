@@ -1,4 +1,4 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.request.RequestOptions
-import com.example.mvvmkotlin.Model.BookingHistoryData
+import com.example.mvvmkotlin.models.BookingHistoryData
 import com.example.mvvmkotlin.R
 
 class BookingHistoryAdapter(

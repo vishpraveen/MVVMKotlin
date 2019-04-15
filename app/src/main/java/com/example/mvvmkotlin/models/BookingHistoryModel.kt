@@ -1,6 +1,4 @@
-package com.example.mvvmkotlin.Model
-
-import com.google.gson.annotations.SerializedName
+package com.example.mvvmkotlin.models
 
 data class BookingHistoryModel(
     var status: String,

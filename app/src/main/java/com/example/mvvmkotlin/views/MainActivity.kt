@@ -1,23 +1,16 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
 import android.content.Context
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import com.example.mvvmkotlin.Model.LoginUser
 import com.example.mvvmkotlin.R
-import com.example.mvvmkotlin.ViewModel.LoginViewModel
+import com.example.mvvmkotlin.viewmodels.LoginViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.FirebaseApp
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
 import android.Manifest
 import android.app.Activity
@@ -27,9 +27,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
-import com.example.mvvmkotlin.Model.CommonModel
+import com.example.mvvmkotlin.models.CommonModel
 import com.example.mvvmkotlin.R
-import com.example.mvvmkotlin.ViewModel.RegisterViewModel
+import com.example.mvvmkotlin.viewmodels.RegisterViewModel
 import com.example.mvvmkotlin.util.Utility
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText

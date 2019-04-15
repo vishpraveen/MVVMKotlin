@@ -1,4 +1,4 @@
-package com.example.mvvmkotlin.Model
+package com.example.mvvmkotlin.models
 
 data class CommonModel(var status: String,
                        var message: String) {

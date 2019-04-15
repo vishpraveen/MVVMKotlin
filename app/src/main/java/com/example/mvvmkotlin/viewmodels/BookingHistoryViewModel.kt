@@ -1,16 +1,11 @@
-package com.example.mvvmkotlin.ViewModel
+package com.example.mvvmkotlin.viewmodels
 
-import android.app.ProgressDialog
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mvvmkotlin.Model.BookingHistoryModel
-import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.models.BookingHistoryModel
 import com.example.mvvmkotlin.util.ApiService
-import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

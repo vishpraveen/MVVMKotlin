@@ -1,8 +1,7 @@
-package com.example.mvvmkotlin.View
+package com.example.mvvmkotlin.views
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
@@ -12,9 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker.checkSelfPermission
-import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mvvmkotlin.R
 import com.google.android.gms.location.FusedLocationProviderClient
