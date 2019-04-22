@@ -76,7 +76,7 @@ class RegisterViewModel: ViewModel() {
                 showHideLoader?.value=false
 //                registerMutableLiveData.value?.status="0"
 //                registerMutableLiveData.value?.message="Failed"
-                commonModel=CommonModel("0","Failed")
+                commonModel=CommonModel("0","Failed: ${exception.message}")
                 registerMutableLiveData?.value=commonModel
                 Log.e(TAG,"OnFailure: "+exception.message)
             }
@@ -84,16 +84,17 @@ class RegisterViewModel: ViewModel() {
 
     private fun addUserDetailsToDatabase(user: HashMap<String, Any>) {
         Utility.getFirebaseDb().collection("User")
+            .document(user["email"].toString())
 //            db.collection("User")
-            .add(user)
+            .set(user)
             .addOnSuccessListener { documentReference ->
                 showHideLoader?.value=false
-                Log.e(TAG,"DocumentSnapshot added with ID: ${documentReference.id}")
+                Log.e(TAG,"DocumentSnapshot added with ID: ${documentReference}")
 
             }
             .addOnFailureListener { exception ->
                 showHideLoader?.value=false
-                Log.e(TAG,"Error adding document: "+ exception)
+                Log.e(TAG,"Error adding document: "+ exception.localizedMessage)
             }
     }
 

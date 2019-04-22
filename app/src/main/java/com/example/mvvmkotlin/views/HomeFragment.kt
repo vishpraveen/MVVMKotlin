@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
 
                 mGoogleMap!!.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener{
                     override fun onMarkerDragEnd(marker : Marker?) {
-                        var position : LatLng =marker!!.position
+                        val position : LatLng =marker!!.position
                         getLocationDetails(position)
                     }
 
