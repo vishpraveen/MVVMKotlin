@@ -2,6 +2,7 @@ package com.example.mvvmkotlin.views
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
@@ -13,7 +14,12 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.services.TrackingService
+import com.example.mvvmkotlin.util.Utility
+import com.example.mvvmkotlin.viewmodels.HomeFragmentViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
@@ -22,8 +28,10 @@ import java.lang.Exception
 import java.util.*
 
 class HomeFragment : Fragment() {
+    private val TAG=HomeFragment::class.java.simpleName
     private lateinit var mMapView: MapView
     private var mGoogleMap: GoogleMap?=null
+    private var mainRoot: View?=null
     private var mLastKnownLocation: Location?=null
     private var isLocationPermissionGranted=false
     private val PERMISSION_REQUEST_LOCATION=10
@@ -31,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private val sydney = LatLng(-34.0, 151.0)
     private lateinit var myLocation : CardView
+    private var homefragmentViewModel: HomeFragmentViewModel?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view=inflater.inflate(R.layout.fragment_home,container,false)
@@ -40,6 +49,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(context, getString(R.string.enable_location), Toast.LENGTH_SHORT).show()
 //            finish()
         }
+        mainRoot=view.findViewById(R.id.homeFragment)
         mMapView= view.findViewById(R.id.map)
         mMapView.onCreate(savedInstanceState)
         mMapView.onResume()
@@ -85,7 +95,33 @@ class HomeFragment : Fragment() {
         myLocation.setOnClickListener {
             getMyLocation()
         }
+        /*
+        * Fetching Markers from the Server
+        * */
+        homefragmentViewModel=ViewModelProviders.of(this).get(HomeFragmentViewModel::class.java)
+        fetchMarkers()
+
         return view
+    }
+
+    private fun fetchMarkers() {
+        if (Utility.isConnectedToInternet(context)){
+            homefragmentViewModel!!.getMarkers().observe(this,Observer<Any>{marker->
+                if (marker!=null){
+
+                }
+                else{
+                    Log.e(TAG,"no marker available.")
+                }
+            })
+        }
+        else{
+            showErrorMessage(getString(R.string.no_internet))
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        Utility.showShackBarWithoutAction(mainRoot!!,message)
     }
 
     private fun getLocationDetails(position: LatLng) {
@@ -164,7 +200,13 @@ class HomeFragment : Fragment() {
 //======================================Starting Location Tracking Service==============================================
 //======================================================================================================================
     private fun startTrackerService() {
-
+        activity!!.startService(Intent(context,TrackingService::class.java))
+    }
+//======================================================================================================================
+//======================================Stop Location Tracking Service==============================================
+//======================================================================================================================
+    private fun stopTrackerService() {
+        activity!!.stopService(Intent(context,TrackingService::class.java))
     }
 
     private fun getLocationPermission() {
@@ -200,5 +242,10 @@ class HomeFragment : Fragment() {
 
     private fun initUI(view: View?) {
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopTrackerService()
     }
 }
