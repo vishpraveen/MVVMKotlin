@@ -24,6 +24,7 @@ class TrackingService : Service(){
     override fun onCreate() {
         super.onCreate()
         requestLocationUpdates()
+
     }
 
     private fun requestLocationUpdates() {
@@ -45,10 +46,8 @@ class TrackingService : Service(){
                     super.onLocationResult(result)
                     val location : Location = result!!.lastLocation
                     if (location!=null){
-                        Utility.getFirebaseDb().collection("User")
-                            .document("Locations")
-                            .collection(Utility.getPreference(applicationContext,SharedPreferenceKeys().email).toString())
-                                .document("location")
+                        Utility.getFirebaseDb().collection("Locations")
+                                .document(Utility.getPreference(applicationContext,SharedPreferenceKeys().email).toString())
                                 .set(location)
                                 .addOnSuccessListener {
                                     Log.e(TAG,"DocumentSnapshot successfully written!: "+location.latitude+", "+location.longitude)
@@ -71,7 +70,7 @@ class TrackingService : Service(){
     /*
   * Creating a BroadCast Receiver
   * */
-    protected var stopReceiver : BroadcastReceiver = object : BroadcastReceiver(){
+    public var stopReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             Log.e(TAG,"stop")
             // Stop the service when the notification is tapped

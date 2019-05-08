@@ -31,11 +31,13 @@
     <string name="home">Home</string>
     <string name="notificaiton">Notificaiton</string>
     <string name="profile_frag">Profile</string>
-    <string name="profile_act">My Profile</string>
+    <string name="view_more">More</string>
     <string name="permission_not_granted">Please grant permission.</string>
     <string name="task_is_null">Task is null.</string>
     <string name="enable_location">Please enable location services</string>
     <string name="Firebase_db_user_path">User</string>
     <string name="logout">Logout</string>
     <string name="welcome">Welcome</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search</string>
 </resources>

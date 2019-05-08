@@ -11,7 +11,7 @@
               android:checked="true"/>
         <item android:id="@+id/profile_activity"
               android:icon="@drawable/ic_account_disable"
-              android:title="@string/profile_act"
+              android:title="@string/view_more"
               android:checkable="false"/>
         <item android:id="@+id/logout"
               android:icon="@drawable/ic_logout"

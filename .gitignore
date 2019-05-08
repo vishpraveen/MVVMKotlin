@@ -1,13 +1,16 @@
 *.iml
 .gradle
+.navigation
 /local.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
-/.idea/workspace.xml
+/.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+output.json
+

@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.mvvmkotlin.models.UserDetails
 import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.services.TrackingService
 import com.example.mvvmkotlin.viewmodels.DrawerActivityViewModel
 import com.example.mvvmkotlin.util.SharedPreferenceKeys
 import com.example.mvvmkotlin.util.Utility
@@ -137,13 +138,14 @@ class DrawerActivity : AppCompatActivity() {
                 msg(getString(R.string.profile_frag))
             }
                 R.id.profile_activity -> {
-                   /* val intent = Intent(this, MyProfileActivity::class.java)
+                    val intent = Intent(this, MoreActivity::class.java)
                     startActivity(intent)
 //                    addFragmentToActivity(fragmentManager,profileFragment,R.id.mainFrame)
 //                    toolbar.title=getString(R.string.profile)
-                    msg(getString(R.string.profile_act))*/
+                    msg(getString(R.string.view_more))
                 }
                 R.id.logout ->{
+                    stopService(Intent(this@DrawerActivity,TrackingService::class.java))
                     Utility.getfirebaseAuth().signOut()
                     Utility.removePreference(context,SharedPreferenceKeys().email)
                     Utility.removePreference(context,SharedPreferenceKeys().firstName)

@@ -22,4 +22,5 @@
     <color name="colorOnError">#FFFFFF</color>
 
     <color name="transparent">#00000000</color>
+    <color name="grey">#616161</color>
 </resources>

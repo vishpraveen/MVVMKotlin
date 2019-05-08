@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                tools:context=".views.MainActivity">
+
+    <WebView android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/repo_web_view"/>
+
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="20dp">
+
+        <ImageButton
+                android:id="@+id/repo_back_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_backward"
+                android:enabled="false"/>
+
+        <ImageButton
+                android:id="@+id/repo_forward_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/repo_back_button"
+                android:background="@drawable/ic_forward"
+                android:enabled="false"/>
+
+        <ImageButton
+                android:id="@+id/repo_refresh_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/repo_forward_button"
+                android:background="@drawable/ic_refresh"/>
+
+        <ProgressBar android:layout_width="20dp" android:layout_height="20dp"
+                     android:id="@+id/repo_progress_view"
+                     android:layout_alignParentEnd="true"
+                     android:layout_marginStart="20dp"
+                     android:layout_toEndOf="@id/repo_refresh_button"
+                     style="?android:attr/progressBarStyleLarge"/>
+
+    </RelativeLayout>
+</RelativeLayout>

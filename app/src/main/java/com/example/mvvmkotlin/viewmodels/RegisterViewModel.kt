@@ -85,7 +85,6 @@ class RegisterViewModel: ViewModel() {
     private fun addUserDetailsToDatabase(user: HashMap<String, Any>) {
         Utility.getFirebaseDb().collection("User")
             .document(user["email"].toString())
-//            db.collection("User")
             .set(user)
             .addOnSuccessListener { documentReference ->
                 showHideLoader?.value=false

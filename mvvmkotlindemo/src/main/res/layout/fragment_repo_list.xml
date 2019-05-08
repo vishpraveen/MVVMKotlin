@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="viewmodel"
+                  type="com.example.mvvmkotlindemo.viewmodel.RepoListViewModel"/>
+    </data>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:id="@+id/repo_list_rv"
+                                                   android:visibility="@{safeUnbox(viewmodel.dataLoading) ? View.GONE : View.VISIBLE}"/>
+
+        <ProgressBar android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     style="?android:attr/progressBarStyleLarge"
+                     android:layout_centerInParent="true"
+                     android:visibility="@{safeUnbox(viewmodel.dataLoading) ? View.VISIBLE : View.GONE}"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:text="No repo to display"
+                  android:textSize="18dp"
+                  android:visibility="@{safeUnbox(viewmodel.empty) ? View.VISIBLE : View.GONE}" />
+    </RelativeLayout>
+</layout>

@@ -12,20 +12,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.models.MarkerLocation
 import com.example.mvvmkotlin.services.TrackingService
+import com.example.mvvmkotlin.util.SharedPreferenceKeys
 import com.example.mvvmkotlin.util.Utility
 import com.example.mvvmkotlin.viewmodels.HomeFragmentViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.adapter_bookinghistory.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import java.lang.Exception
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
     private val TAG=HomeFragment::class.java.simpleName
@@ -59,38 +65,35 @@ class HomeFragment : Fragment() {
         catch (e:Exception){
             Log.e(this@HomeFragment.javaClass.simpleName,e.localizedMessage)
         }
-        mMapView.getMapAsync(object :OnMapReadyCallback{
-            override fun onMapReady(gMap: GoogleMap?) {
-                mGoogleMap=gMap
-                mGoogleMap!!.setMapStyle(MapStyleOptions.loadRawResourceStyle(context,R.raw.map_style))
-                mGoogleMap!!.uiSettings.isMyLocationButtonEnabled=false
-                mGoogleMap!!.uiSettings.isRotateGesturesEnabled=false
-                mGoogleMap!!.uiSettings.isScrollGesturesEnabled=true
-                mGoogleMap!!.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom=false
 
-                mGoogleMap!!.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener{
-                    override fun onMarkerDragEnd(marker : Marker?) {
-                        val position : LatLng =marker!!.position
-                        getLocationDetails(position)
-                    }
+        mMapView.getMapAsync { gMap ->
+            mGoogleMap=gMap
+            mGoogleMap!!.setMapStyle(MapStyleOptions.loadRawResourceStyle(context,R.raw.map_style))
+            mGoogleMap!!.uiSettings.isMyLocationButtonEnabled=false
+            mGoogleMap!!.uiSettings.isRotateGesturesEnabled=false
+            mGoogleMap!!.uiSettings.isScrollGesturesEnabled=true
+            mGoogleMap!!.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom=false
 
-                    override fun onMarkerDragStart(marker : Marker?) {
+            mGoogleMap!!.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener{
+                override fun onMarkerDragEnd(marker : Marker?) {
+                    val position : LatLng =marker!!.position
+                    getLocationDetails(position)
+                }
 
-                    }
+                override fun onMarkerDragStart(marker : Marker?) {
 
-                    override fun onMarkerDrag(marker : Marker?) {
+                }
 
-                    }
+                override fun onMarkerDrag(marker : Marker?) {
 
-                })
+                }
 
-                updateLocationUI()
+            })
 
-                getDeviceLocation()
+            updateLocationUI()
 
-            }
-
-        })
+            getDeviceLocation()
+        }
         myLocation=view.findViewById(R.id.myLocation)
         myLocation.setOnClickListener {
             getMyLocation()
@@ -106,17 +109,43 @@ class HomeFragment : Fragment() {
 
     private fun fetchMarkers() {
         if (Utility.isConnectedToInternet(context)){
-            homefragmentViewModel!!.getMarkers().observe(this,Observer<Any>{marker->
-                if (marker!=null){
+            homefragmentViewModel!!.getMarkers(Utility.getPreference(context,SharedPreferenceKeys().email)).observe(this,object :Observer<ArrayList<MarkerLocation>>{
+                override fun onChanged(marker: ArrayList<MarkerLocation>?) {
+                    addMarkersFromServer(marker)
+                    /*for (items in marker!!){
+                        val location=LatLng(items.latitude.toDouble(),items.longitude.toDouble())
+                        if(mGoogleMap!=null){
+                            mGoogleMap!!.addMarker(MarkerOptions().position(location)
+                                .title("Car")
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker))
+                                .draggable(true))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker))
+                            Log.e(TAG,"Marker Added @: "+location.latitude.toString()+" ,"+location.longitude.toString())
+                        }else{
+                            Log.e(TAG, "mGoogleMap is Null")
+                        }
 
+                    }*/
                 }
-                else{
-                    Log.e(TAG,"no marker available.")
-                }
+
             })
         }
         else{
             showErrorMessage(getString(R.string.no_internet))
+        }
+    }
+
+    private fun addMarkersFromServer(marker: ArrayList<MarkerLocation>?) {
+        for (items in marker!!){
+            val location=LatLng(items.latitude.toDouble(),items.longitude.toDouble())
+            if(mGoogleMap!=null){
+                mGoogleMap!!.addMarker(MarkerOptions().position(location)
+                    .title("Car")
+                    .draggable(true))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker))
+                Log.e(TAG,"Marker Added @: "+location.latitude.toString()+" ,"+location.longitude.toString())
+            }else{
+                Log.e(TAG, "mGoogleMap is Null")
+            }
+
         }
     }
 
@@ -129,10 +158,15 @@ class HomeFragment : Fragment() {
 
         var addresses : ArrayList<Address>
         addresses = geocoder.getFromLocation(position.latitude,position.longitude,1) as ArrayList<Address>
-        var address =addresses[0].getAddressLine(0)
-        var city = addresses[0].locality
+        if(addresses.size>0) {
+            var address = addresses[0].getAddressLine(0)
+            var city = addresses[0].locality
 
-        Toast.makeText(context, "New Address: $address $city", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "New Address: $address $city", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            Toast.makeText(context, "Address not available", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getMyLocation() {
@@ -153,7 +187,7 @@ class HomeFragment : Fragment() {
                             mLastKnownLocation = task.result
                             mGoogleMap!!.addMarker(MarkerOptions().position(LatLng(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude))
                                 .title("Marker at Current Location")
-                                .draggable(true))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker))
+                                .draggable(true))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.car))
                             mGoogleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLastKnownLocation!!.latitude,
                                 mLastKnownLocation!!.longitude), DEFAULT_ZOOM))
                         }

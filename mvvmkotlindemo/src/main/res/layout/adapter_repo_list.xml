@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="itemData"
+                  type="com.example.mvvmkotlindemo.model.Item"/>
+    </data>
+    <RelativeLayout
+            android:id="@+id/rl_main_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
+
+        <LinearLayout android:id="@+id/llImage" android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="45dp" android:layout_height="45dp"
+                    android:id="@+id/avatarImage"/>
+
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent" android:layout_height="45dp"
+                      android:layout_toEndOf="@id/avatarImage"
+                      android:text="@{itemData.full_name}"
+                      android:textSize="20dp"
+                      android:textColor="@android:color/black"
+                      android:maxLines="2"
+                      android:ellipsize="end"
+                      android:layout_marginStart="5dp"
+                      android:layout_marginEnd="5dp"
+                      android:textStyle="bold"/>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/description" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_below="@id/llImage"
+                android:textSize="14dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="@{itemData.description}"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:layout_below="@id/description"
+                      android:layout_marginTop="5dp"
+                      android:layout_marginStart="5dp"
+                      android:layout_marginEnd="5dp">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Forks: "
+                      android:textSize="12dp"
+                      android:layout_marginEnd="5dp"
+                      android:textStyle="bold"/>
+
+            <TextView android:id="@+id/branch"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{itemData.forks_count+``}"
+                      android:textSize="12dp"
+                      android:layout_marginEnd="5dp"
+                      android:textStyle="bold"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Stars: "
+                      android:textSize="12dp"
+                      android:layout_marginEnd="5dp"
+                      android:textStyle="bold"/>
+            <TextView android:id="@+id/star"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{itemData.stargazers_count+``}"
+                      android:textSize="12dp"
+                      android:layout_marginEnd="5dp"
+                      android:layout_marginStart="5dp"
+                      android:textStyle="bold"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Issues: "
+                      android:textSize="12dp"
+                      android:layout_marginEnd="5dp"
+                      android:textStyle="bold"/>
+            <TextView android:id="@+id/issues"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@{itemData.open_issues_count+` issues`}"
+                      android:textSize="12dp"
+                      android:layout_marginEnd="5dp"
+                      android:layout_marginStart="5dp"
+                      android:textStyle="bold"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
